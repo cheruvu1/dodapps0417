@@ -4,7 +4,7 @@
     "dependencyDashboard": true,
     "dependencyDashboardHeader": "- [ ] Sync upstream versions with updated dependencies.",
     "dependencyDashboardTitle": "Renovate: Upgrade Package Dependencies",
-    "draftPR": true,
+    "draftPR": false,
     "enabledManagers": ["regex"],
     "labels": ["renovate"],
     "commitMessagePrefix": "",
@@ -35,54 +35,8 @@
         {
             "fileMatch": ["^dev/configmap\\.yaml$"],
             "matchStrings": [
-              "kyverno:\\s+git:\\s+repo:\\s+(?<depName>.+)\\s+tag:\\s+\"(?<currentValue>.+)\""
+              "git:\\s+repo:\\s+(?<depName>.+)\\s+tag:\\s+\"(?<currentValue>.+)\""
             ],
-            "depNameTemplate": "https://repo1.dso.mil/big-bang/product/packages/kyverno.git",
-            "datasourceTemplate": "git-tags",
-            "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-bb\\.(?<build>\\d+)$"
-        },
-        {
-            "fileMatch": ["^dev/configmap\\.yaml$"],
-            "matchStrings": [
-              "fluentbit:\\s+git:\\s+repo:\\s+(?<depName>.+)\\s+tag:\\s+\"(?<currentValue>.+)\""
-            ],
-            "depNameTemplate": "https://repo1.dso.mil/big-bang/product/packages/fluentbit.git",
-            "datasourceTemplate": "git-tags",
-            "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-bb\\.(?<build>\\d+)$"
-        },
-        {
-            "fileMatch": ["^dev/configmap\\.yaml$"],
-            "matchStrings": [
-              "logging:\\s+git:\\s+repo:\\s+(?<depName>.+)\\s+tag:\\s+\"(?<currentValue>.+)\""
-            ],
-            "depNameTemplate": "https://repo1.dso.mil/big-bang/product/packages/elasticsearch-kibana.git",
-            "datasourceTemplate": "git-tags",
-            "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-bb\\.(?<build>\\d+)$"
-        },
-        {
-            "fileMatch": ["^dev/configmap\\.yaml$"],
-            "matchStrings": [
-              "monitoring:\\s+git:\\s+repo:\\s+(?<depName>.+)\\s+tag:\\s+\"(?<currentValue>.+)\""
-            ],
-            "depNameTemplate": "https://repo1.dso.mil/platform-one/big-bang/apps/core/monitoring.git",
-            "datasourceTemplate": "git-tags",
-            "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-bb\\.(?<build>\\d+)$"
-        },
-        {
-            "fileMatch": ["^dev/configmap\\.yaml$"],
-            "matchStrings": [
-              "gatekeeper:\\s+git:\\s+repo:\\s+(?<depName>.+)\\s+tag:\\s+\"(?<currentValue>.+)\""
-            ],
-            "depNameTemplate": "https://repo1.dso.mil/platform-one/big-bang/apps/core/policy.git",
-            "datasourceTemplate": "git-tags",
-            "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-bb\\.(?<build>\\d+)$"
-        },
-        {
-            "fileMatch": ["^dev/configmap\\.yaml$"],
-            "matchStrings": [
-              "twistlock:\\s+git:\\s+repo:\\s+(?<depName>.+)\\s+tag:\\s+\"(?<currentValue>.+)\""
-            ],
-            "depNameTemplate": "https://repo1.dso.mil/platform-one/big-bang/apps/security-tools/twistlock.git",
             "datasourceTemplate": "git-tags",
             "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-bb\\.(?<build>\\d+)$"
         }
