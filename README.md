@@ -44,6 +44,17 @@ In addition, the following items are recommended to assist with troubleshooting:
 
 ## Setup
 
+This template supports two distinct workflows for staying up-to-date with Big Bang:
+- `package-strategy` represents an environment that prioritizes the fastest path to receiving updates as they are released from Big Bang development.
+  - This update strategy lends itself to modification of the Big Bang deployment in small and manageable components.
+  - Allows for critical security patches to reach the environment as quickly as possible
+  - This can be coupled with [renovate]() (See the renovate section below) to automate the delivery of updates for an environment for each package as updates released.
+  - As a result of updating packages - Updates to Big Bang patch and/or minor releases may not end up modifying the environment. 
+- `umbrella-strategy` represents an environment that receives updates to Big Bang and all Big Bang packages during the release of the umbrella. 
+  - This update strategy allows Big Bang development to test the integration of all packages in an end-to-end testing workflow to ensure backwards compatibility and/or any required integration has occurred.
+  - It can deliver updates to many applications simultaneously with built-in dependency management for which updates occur first.
+  - It ensures that any integration that needs to be managed at the Big Bang umbrella layer has occurred before package deployment.
+
 This template supports a multi-environment template for two distinct deployments: `prod` and `dev`.  Additional environments can be added by replicating one of the existing folders.
 
 Each environment consists of a Kubernetes manifest containing Flux resources (`bigbang.yaml`), a Kustomization file (`kustomization.yaml`), values to pass to Big Bang (`configmap.yaml`), secrets (`secrets.enc.yaml`), and additional files used to deploy resources.  All of the environments share a `base` folder to allow reusability of values between environments.
@@ -677,7 +688,11 @@ When you save the file, sops automatically re-encrypts it for all of the keys sp
 
 ## Multi-environment Workflow
 
-In this template, we have a `dev` and `prod` environment.  Your specific situation deployment may have more.  Our intended workflow is:
+In this template, we have a `package-strategy` and `umbrella-strategy` deployment strategies. These can be used in any combination you see fit to manage multiple environments. Optimally updates are introduced to your environments through quality gates - where you would test updates in a`dev` environment before promoting to a `prod` environment.
+
+In this instance - you can copy the strategy directory you select for each environment and name them accordingly. We will use `dev` and `prod` in this example.
+
+This accomplishes:
 
 - Test changes in the `dev` environment before deploying into `prod`
 - Keep `dev` as close as possible to `prod` by sharing values
@@ -704,3 +719,11 @@ Big Bang `dev` value changes can be made by simply modifying `dev/configmap.yaml
 The same concept applies to `dev` secret changes, with two separate secrets named `common-bb` and `environment-bb` used for values to Big Bang, with the `environment-bb` values taking precedence over the `common-bb` values in Big Bang.
 
 If a new resource must be deployed, for example a TLS cert, you must add a `resources:` section to the `kustomization.yaml` to refer to the new file.  See the base directory for an example.
+
+## Renovate Bot
+
+As documented in [Big Bang](), optimally the repository that maintains your GitOps state (this template) is being monitored by a tool such as renovate bot to determine when a package can be updated.
+
+The [renovate configuration](./renovate.json) in this repository will target the Repo1 packages for both individual packages as well the Big Bang umbrella chart.
+
+Following the `package-strategy` for consuming updates would have renovate open pull/merge-requests on a per-package basis. 
