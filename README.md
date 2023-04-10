@@ -55,9 +55,7 @@ This template supports two distinct workflows for staying up-to-date with Big Ba
   - It can deliver updates to many applications simultaneously with built-in dependency management for which updates occur first.
   - It ensures that any integration that needs to be managed at the Big Bang umbrella layer has occurred before package deployment.
 
-This template supports a multi-environment template for two distinct deployments: `prod` and `dev`.  Additional environments can be added by replicating one of the existing folders.
-
-Each environment consists of a Kubernetes manifest containing Flux resources (`bigbang.yaml`), a Kustomization file (`kustomization.yaml`), values to pass to Big Bang (`configmap.yaml`), secrets (`secrets.enc.yaml`), and additional files used to deploy resources.  All of the environments share a `base` folder to allow reusability of values between environments.
+Each strategy consists of a Kubernetes manifest containing Flux resources (`bigbang.yaml`), a Kustomization file (`kustomization.yaml`), values to pass to Big Bang (`configmap.yaml`), secrets (`secrets.enc.yaml`), and additional files used to deploy resources.  All of the environments share a `base` folder to allow reusability of values between environments.
 
 > To insure variables (e.g. `${fp}`) are set correctly, execute all of the steps below in the same terminal window.
 
@@ -722,7 +720,7 @@ If a new resource must be deployed, for example a TLS cert, you must add a `reso
 
 ## Renovate Bot
 
-As documented in [Big Bang](), optimally the repository that maintains your GitOps state (this template) is being monitored by a tool such as renovate bot to determine when a package can be updated.
+As documented in Big Bang, optimally the repository that maintains your GitOps state (this template) is being monitored by a tool such as renovate bot to determine when a package can be updated.
 
 The [renovate configuration](./renovate.json) in this repository will target the Repo1 packages for both individual packages as well the Big Bang umbrella chart.
 
