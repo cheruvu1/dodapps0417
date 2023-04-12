@@ -71,7 +71,32 @@ loki:
     tag: "4.8.0-bb.2"
     path: "./chart"
   enabled: true
-  strategy: monolith
+  strategy: scalable
+  values:
+    minio:
+      enabled: true
+    write:
+      replicas: 1
+      persistence:
+        size: 2Gi
+      resources:
+        limits:
+          cpu: 200m
+          memory: 400Mi
+        requests:
+          cpu: 200m
+          memory: 400Mi
+    read:
+      replicas: 1
+      persistence:
+        size: 2Gi
+      resources:
+        limits:
+          cpu: 200m
+          memory: 400Mi
+        requests:
+          cpu: 200m
+          memory: 400Mi
 
 promtail:
   git:

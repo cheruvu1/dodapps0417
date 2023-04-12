@@ -57,7 +57,6 @@ This template supports two distinct workflows for staying up-to-date with Big Ba
 
 Each strategy consists of a Kubernetes manifest containing Flux resources (`bigbang.yaml`), a Kustomization file (`kustomization.yaml`), values to pass to Big Bang (`configmap.yaml`), secrets (`secrets.enc.yaml`), and additional files used to deploy resources.  All of the environments share a `base` folder to allow reusability of values between environments.
 
-> To insure variables (e.g. `${fp}`) are set correctly, execute all of the steps below in the same terminal window.
 
 ## Git Repository
 
@@ -71,6 +70,10 @@ cd <your repo>
 
 # Create branch for your changes
 git checkout -b template-demo
+
+# Copy one of the strategy directories into named-environment directories
+cp -r template/package-stategy template/dev
+cp -r template/umbrella-strategy template/prod
 ```
 
 > It is recommended that you create your own branch so that you can [pull the original repository's `main` branch as a mirror](https://docs.gitlab.com/ee/user/project/repository/repository_mirroring.html) to keep it in sync.
