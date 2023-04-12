@@ -48,7 +48,7 @@ This template supports two distinct workflows for staying up-to-date with Big Ba
 - `package-strategy` represents an environment that prioritizes the fastest path to receiving updates as they are released from Big Bang development.
   - This update strategy lends itself to modification of the Big Bang deployment in small and manageable components.
   - Allows for critical security patches to reach the environment as quickly as possible
-  - This can be coupled with [renovate]() (See the renovate section below) to automate the delivery of updates for an environment for each package as updates released.
+  - This can be coupled with [renovate](https://docs.renovatebot.com/) (See the renovate section below) to automate the delivery of updates for an environment for each package as updates released.
   - As a result of updating packages - Updates to Big Bang patch and/or minor releases may not end up modifying the environment. 
 - `umbrella-strategy` represents an environment that receives updates to Big Bang and all Big Bang packages during the release of the umbrella. 
   - This update strategy allows Big Bang development to test the integration of all packages in an end-to-end testing workflow to ensure backwards compatibility and/or any required integration has occurred.
