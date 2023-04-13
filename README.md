@@ -45,17 +45,19 @@ In addition, the following items are recommended to assist with troubleshooting:
 ## Setup
 
 This template supports two distinct workflows for staying up-to-date with Big Bang:
-- `package-strategy` represents an environment that prioritizes the fastest path to receiving updates as they are released from Big Bang development.
-  - This update strategy lends itself to modification of the Big Bang deployment in small and manageable components.
+- `package-strategy` represents an environment that prioritizes the fastest path to receiving package updates as they are released from Big Bang development.
+  - This update strategy keeps updates to the environment and Big Bang deployment small (i.e. a single package update at a time)
   - Allows for critical security patches to reach the environment as quickly as possible
   - This can be coupled with [renovate](https://docs.renovatebot.com/) (See the renovate section below) to automate the delivery of updates for an environment for each package as updates released.
   - As a result of updating packages - Updates to Big Bang patch and/or minor releases may not end up modifying the environment. 
-- `umbrella-strategy` represents an environment that receives updates to Big Bang and all Big Bang packages during the release of the umbrella. 
+- `umbrella-strategy` represents an environment that receives updates to all Big Bang packages exclusively from new releases of Big Bang. 
   - This update strategy allows Big Bang development to test the integration of all packages in an end-to-end testing workflow to ensure backwards compatibility and/or any required integration has occurred.
   - It can deliver updates to many applications simultaneously with built-in dependency management for which updates occur first.
   - It ensures that any integration that needs to be managed at the Big Bang umbrella layer has occurred before package deployment.
 
-Each strategy consists of a Kubernetes manifest containing Flux resources (`bigbang.yaml`), a Kustomization file (`kustomization.yaml`), values to pass to Big Bang (`configmap.yaml`), secrets (`secrets.enc.yaml`), and additional files used to deploy resources.  All of the environments share a `base` folder to allow reusability of values between environments.
+Each strategy consists of a Kubernetes manifest containing Flux resources (`bigbang.yaml`), a Kustomization file (`kustomization.yaml`), values to pass to Big Bang (`configmap.yaml`), secrets (`secrets.enc.yaml`), and additional files used to deploy resources.
+
+We recommend that you adopt a [multi environment workflow](#multi-environment-workflow) based off of one of these strategies. If following this path each environment can share a `base` folder to allow reusability of values between environments.
 
 
 ## Git Repository
@@ -689,7 +691,7 @@ When you save the file, sops automatically re-encrypts it for all of the keys sp
 
 ## Multi-environment Workflow
 
-In this template, we have a `package-strategy` and `umbrella-strategy` deployment strategies. These can be used in any combination you see fit to manage multiple environments. Optimally updates are introduced to your environments through quality gates - where you would test updates in a`dev` environment before promoting to a `prod` environment.
+In this template, we provide the `package-strategy` and `umbrella-strategy` deployment strategies. These can be used in any combination you see fit to manage multiple environments. Optimally updates are introduced to your environments through quality gates - where you would test updates in a `dev` environment before promoting to a `prod` environment.
 
 In this instance - you can copy the strategy directory you select for each environment and name them accordingly. We will use `dev` and `prod` in this example.
 
@@ -723,8 +725,6 @@ If a new resource must be deployed, for example a TLS cert, you must add a `reso
 
 ## Renovate Bot
 
-As documented in Big Bang, optimally the repository that maintains your GitOps state (this template) is being monitored by a tool such as renovate bot to determine when a package can be updated.
+As documented in Big Bang, optimally the repository that maintains your GitOps state (this template) is being monitored by a tool such as Renovate to provide alerting and automation around updates for Big Bang and packages.
 
-The [renovate configuration](./renovate.json) in this repository will target the Repo1 packages for both individual packages as well the Big Bang umbrella chart.
-
-Following the `package-strategy` for consuming updates would have renovate open pull/merge-requests on a per-package basis. 
+The [Renovate configuration](./renovate.json) in this repository provides an example that will target Repo1 git repositories for both individual packages as well the Big Bang umbrella chart and provide automated merge requests for updates. If following the `package-strategy` for consuming updates, Renovate will open pull/merge-requests on a per-package basis.
