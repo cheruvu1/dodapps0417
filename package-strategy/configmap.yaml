@@ -120,6 +120,21 @@ kyvernopolicies:
     tag: "1.1.0-bb.4"
     path: "./chart"
   enabled: true
+  # values:
+  #   exclude:
+  #     any:
+  #     # Allows k3d load balancer to bypass policies.
+  #     - resources:
+  #         namespaces:
+  #         - istio-system
+  #         names:
+  #         - svclb-*
+  #   policies:
+  #     restrict-host-path-mount-pv:
+  #       parameters:
+  #         allow:
+  #         - /tmp/allowed
+  #         - /var/lib/rancher/k3s/storage/pvc-*
 
 neuvector:
   git:
@@ -138,3 +153,6 @@ addons:
       tag: "3.8.4-bb.0"
       path: "./chart"
     enabled: auto
+
+  minioOperator:
+    enabled: true # Minio Operator is required for Loki in default core

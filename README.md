@@ -74,8 +74,13 @@ cd <your repo>
 git checkout -b template-demo
 
 # Copy one of the strategy directories into named-environment directories
-cp -r template/package-stategy template/dev
-cp -r template/umbrella-strategy template/prod
+cp -r package-stategy/ dev
+# update path - switch to gsed on MacOS
+sed -i 's/package-strategy/dev/g' dev/bigbang.yaml
+
+cp -r umbrella-strategy/ prod
+# update path - switch to gsed on MacOS
+sed -i 's/package-strategy/prod/g' prod/bigbang.yaml
 ```
 
 > It is recommended that you create your own branch so that you can [pull the original repository's `main` branch as a mirror](https://docs.gitlab.com/ee/user/project/repository/repository_mirroring.html) to keep it in sync.
