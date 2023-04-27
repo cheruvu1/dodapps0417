@@ -12,7 +12,7 @@ spec:
   interval: 1m
   url: https://github.com/cheruvu1/dodapps0417.git
   ref:
-    branch: dodapps0417
+    branch: template-demo0427
   secretRef:
     name: private-git
 ---
