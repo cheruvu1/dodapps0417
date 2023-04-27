@@ -15,6 +15,20 @@ flux:
 kiali:
   enabled: false
 
+gatekeeper:
+  values:
+    replicas: 1
+    controllerManager:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+    audit:
+      resources:
+        requests:
+          cpu: 200m
+          memory: 256Mi
+          
 istio:
   git:
     repo: https://repo1.dso.mil/platform-one/big-bang/apps/core/istio-controlplane.git
